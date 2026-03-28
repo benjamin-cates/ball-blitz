@@ -29,6 +29,14 @@ const App: React.FC = () => {
   const setBallCounts = useGameStore((state) => state.setBallCounts);
   const gameStarted = useGameStore((state) => state.gameStarted);
   const setGameStarted = useGameStore((state) => state.setGameStarted);
+  const gameOver = useGameStore((state) => state.gameOver);
+
+  React.useEffect(() => {
+    if (gameOver && gameStarted) {
+      setGameStarted(false);
+      setBalls([]);
+    }
+  }, [gameOver, gameStarted, setGameStarted]);
 
   const handleQuit = useCallback(() => {
     setGameStarted(false);
@@ -70,7 +78,7 @@ const App: React.FC = () => {
       if (hasLargeBall) {
         setBoxSize(4, 7, 6);
       } else {
-        setBoxSize(4, 6, 5);
+        setBoxSize(4, 6, 4);
       }
 
       addPoints(newSize * newSize);

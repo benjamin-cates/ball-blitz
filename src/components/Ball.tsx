@@ -1,8 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { RigidBody, type RigidBodyProps, type CollisionPayload, vec3, BallCollider } from '@react-three/rapier';
 import { Gltf } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { BALL_CONFIGS, getBallRadius, getBallStartRadius } from '../constants';
+import { useGameStore } from '../store';
 
 interface BallProps extends RigidBodyProps {
     id: string;
@@ -17,10 +19,23 @@ export const Ball: React.FC<BallProps> = ({ id, size, onMerge, isExample, animat
     const rbRef = useRef<any>(null);
     const meshRef = useRef<THREE.Group>(null);
     const [scale, setScale] = useState(1);
+    const setGameOver = useGameStore((state) => state.setGameOver);
+    const setLastDroppedBall = useGameStore((state) => state.setLastDroppedBall);
+    const gameOver = useGameStore((state) => state.gameOver);
 
     const radius = getBallRadius(size);
     const startRadius = getBallStartRadius(size);
     const targetScale = radius / startRadius;
+
+    useFrame(() => {
+        if (isExample || gameOver || !rbRef.current) return;
+
+        const pos = rbRef.current.translation();
+        if (pos.y < -10) {
+            setLastDroppedBall(config.name);
+            setGameOver(true);
+        }
+    });
 
     // Initial growth animation
     useEffect(() => {
