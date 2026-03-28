@@ -23,7 +23,6 @@ const App: React.FC = () => {
   const setShaking = useGameStore((state) => state.setShaking);
   const debugMode = useGameStore((state) => state.debugMode);
   const addPoints = useGameStore((state) => state.addPoints);
-  const toggleDebugMode = useGameStore((state) => state.toggleDebugMode);
   const setBoxSize = useGameStore((state) => state.setBoxSize);
   const setBallCounts = useGameStore((state) => state.setBallCounts);
 

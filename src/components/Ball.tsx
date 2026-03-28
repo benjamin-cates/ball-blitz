@@ -3,7 +3,6 @@ import { RigidBody, type RigidBodyProps, type CollisionPayload, vec3, BallCollid
 import { Gltf } from '@react-three/drei';
 import * as THREE from 'three';
 import { BALL_CONFIGS, getBallRadius, getBallStartRadius } from '../constants';
-import { useGameStore } from '../store';
 
 interface BallProps extends RigidBodyProps {
     id: string;
@@ -18,7 +17,6 @@ export const Ball: React.FC<BallProps> = ({ id, size, onMerge, isExample, animat
     const rbRef = useRef<any>(null);
     const meshRef = useRef<THREE.Group>(null);
     const [scale, setScale] = useState(1);
-    const addPoints = useGameStore((state) => state.addPoints);
 
     const radius = getBallRadius(size);
     const startRadius = getBallStartRadius(size);
