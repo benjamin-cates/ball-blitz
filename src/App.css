@@ -1,3 +1,27 @@
+@font-face {
+  font-family: "Lato"; /* A name you choose to use in your CSS */
+  src: url("/Lato-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; /* Controls font loading behavior for better user experience */
+}
+@font-face {
+  font-family: "Lato"; /* A name you choose to use in your CSS */
+  src: url("/Lato-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap; /* Controls font loading behavior for better user experience */
+}
 body {
   margin: 0;
+}
+#root {
+  /* Legibility enhancements */
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+* {
+  font-family: "Lato", sans-serif;
 }

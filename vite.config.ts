@@ -8,5 +8,6 @@ export default defineConfig({
     react(),
     babel({ presets: [reactCompilerPreset()] })
   ],
-  assetsInclude: "**/*.glb",
+  assetsInclude: ["**/*.glb", "**/*.ttf"],
+  publicDir: "public",
 })

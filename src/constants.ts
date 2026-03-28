@@ -1,11 +1,11 @@
-import golfModel from '../assets/Golf_compressed.glb';
-import poolModel from '../assets/Pool.glb';
-import tennisModel from '../assets/Tennis.glb';
-import baseballModel from '../assets/Baseball_compressed.glb';
-import bowlingModel from '../assets/Bowling_compressed.glb';
-import soccerModel from '../assets/Soccer.glb';
-import basketballModel from '../assets/Basketball_compressed.glb';
-import beachBallModel from '../assets/Beach_ball.glb';
+import golfModel from './assets/Golf_compressed.glb';
+import poolModel from './assets/Pool.glb';
+import tennisModel from './assets/Tennis.glb';
+import baseballModel from './assets/Baseball_compressed.glb';
+import bowlingModel from './assets/Bowling_compressed.glb';
+import soccerModel from './assets/Soccer.glb';
+import basketballModel from './assets/Basketball_compressed.glb';
+import beachBallModel from './assets/Beach_ball.glb';
 import { useGLTF } from '@react-three/drei';
 
 export interface BallConfig {
@@ -63,7 +63,7 @@ export const BALL_CONFIGS: BallConfig[] = [
         radius: 1.3,
         startRadius: 1.0,
         scale: 0.95,
-        color: "#000066",
+        color: "#1b1bb1",
         modelUrl: poolModel,
         points: 3,
     },
@@ -108,7 +108,7 @@ export const BALL_CONFIGS: BallConfig[] = [
         radius: 2.8,
         startRadius: 2.5,
         scale: 4.7,
-        color: "#9c2509",
+        color: "#b44f20",
         modelUrl: basketballModel,
         points: 8,
     },
@@ -121,6 +121,24 @@ export const BALL_CONFIGS: BallConfig[] = [
         modelUrl: beachBallModel,
         points: 9,
     },
+    {
+        name: "Beach Ball 2",
+        radius: 3.8,
+        startRadius: 3.1,
+        scale: 2.65 * 3.8 / 3.1,
+        color: "#ffffff",
+        modelUrl: beachBallModel,
+        points: 20,
+    },
+    {
+        name: "Beach Ball 3",
+        radius: 4.8,
+        startRadius: 3.8,
+        scale: 2.65 * 4.8 / 3.1,
+        color: "#ffffff",
+        modelUrl: beachBallModel,
+        points: 50,
+    }
 ];
 
 export const getBallRadius = (size: number) => {
