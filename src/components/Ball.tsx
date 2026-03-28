@@ -65,11 +65,9 @@ export const Ball: React.FC<BallProps> = ({ id, size, onMerge, isExample, animat
             onCollisionEnter={handleCollision}
             userData={{ type: 'ball', size, id }}
             type={isExample ? 'kinematicPosition' : 'dynamic'}
-            restitution={0}
-            friction={0.8}
             {...props}
         >
-            {id == "preview" ? <></> : <BallCollider args={[radius]} />}
+            {id == "preview" ? <></> : <BallCollider friction={0.3} restitution={0.2} args={[radius]} />}
             <group ref={meshRef} scale={scale}>
                 {config.modelUrl ? (
                     <Gltf castShadow src={config.modelUrl} scale={config.scale} />
