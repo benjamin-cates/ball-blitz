@@ -15,17 +15,15 @@ interface BallProps extends RigidBodyProps {
 }
 
 export const Ball: React.FC<BallProps> = ({ id, size, onMerge, isExample, animate, ...props }) => {
-    const config = BALL_CONFIGS[Math.min(size, 9)] || BALL_CONFIGS[0];
+    const config = BALL_CONFIGS[Math.min(size, BALL_CONFIGS.length - 1)] || BALL_CONFIGS[0];
     const rbRef = useRef<any>(null);
     const meshRef = useRef<THREE.Group>(null);
-    const [scale, setScale] = useState(1);
+    const startRadius = getBallStartRadius(size);
+    const radius = getBallRadius(size);
+    const [currentRadius, setCurrentRadius] = useState(radius);
     const setGameOver = useGameStore((state) => state.setGameOver);
     const setLastDroppedBall = useGameStore((state) => state.setLastDroppedBall);
     const gameOver = useGameStore((state) => state.gameOver);
-
-    const radius = getBallRadius(size);
-    const startRadius = getBallStartRadius(size);
-    const targetScale = radius / startRadius;
 
     useFrame(() => {
         if (isExample || gameOver || !rbRef.current) return;
@@ -40,20 +38,20 @@ export const Ball: React.FC<BallProps> = ({ id, size, onMerge, isExample, animat
     // Initial growth animation
     useEffect(() => {
         if (isExample || !animate) {
-            setScale(targetScale);
+            setCurrentRadius(radius);
         } else {
-            setScale(0.1);
+            setCurrentRadius(startRadius);
             const startTime = Date.now();
             const duration = 500;
             const animateFn = () => {
                 const elapsed = Date.now() - startTime;
                 const progress = Math.min(elapsed / duration, 1);
-                setScale(0.1 + (targetScale - 0.1) * progress);
+                setCurrentRadius(startRadius + (radius - startRadius) * progress);
                 if (progress < 1) requestAnimationFrame(animateFn);
             };
             animateFn();
         }
-    }, [size, isExample, targetScale, animate]);
+    }, [size, isExample, animate, radius, startRadius]);
 
     const handleCollision = (payload: CollisionPayload) => {
         if (isExample || !onMerge) return;
@@ -63,7 +61,6 @@ export const Ball: React.FC<BallProps> = ({ id, size, onMerge, isExample, animat
         if (other && (other as any).userData?.type === 'ball') {
             const otherSize = (other as any).userData?.size;
             const otherId = (other as any).userData?.id;
-
             if (otherSize === size && id < otherId) { // Basic lock to prevent double merge
                 const myPos = vec3(rbRef.current.translation());
                 onMerge(id, otherId, size + 1, myPos);
@@ -80,13 +77,13 @@ export const Ball: React.FC<BallProps> = ({ id, size, onMerge, isExample, animat
             type={isExample ? 'kinematicPosition' : 'dynamic'}
             {...props}
         >
-            {id == "preview" ? <></> : <BallCollider friction={0.3} restitution={0.2} args={[radius]} />}
-            <group ref={meshRef} scale={scale}>
+            {id == "preview" ? <></> : <BallCollider friction={0.3} restitution={0.2} args={[currentRadius]} />}
+            <group ref={meshRef} scale={1}>
                 {config.modelUrl ? (
-                    <Gltf castShadow src={config.modelUrl} scale={config.scale} />
+                    <Gltf castShadow src={config.modelUrl} scale={config.scale * currentRadius / startRadius} />
                 ) : (
                     <mesh castShadow>
-                        <sphereGeometry args={[startRadius, 32, 32]} />
+                        <sphereGeometry args={[currentRadius, 32, 32]} />
                         <meshStandardMaterial
                             color={config.color}
                             roughness={0.67}

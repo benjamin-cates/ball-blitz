@@ -8,10 +8,16 @@ import basketballModel from './assets/Basketball_compressed.glb';
 import beachBallModel from './assets/Beach_ball.glb';
 import { useGLTF } from '@react-three/drei';
 
+export const getBallRadius = (size: number): number => {
+    return size * 0.3 + 0.4;
+};
+
+export const getBallStartRadius = (size: number): number => {
+    return (size * 0.3 - 0.3 + 0.4) * 0.95;
+};
+
 export interface BallConfig {
     name: string;
-    radius: number;
-    startRadius: number;
     scale: number;
     color: string;
     modelUrl?: string;
@@ -35,24 +41,18 @@ export interface BallConfig {
 export const BALL_CONFIGS: BallConfig[] = [
     {
         name: "Placeholder", // Index 0
-        radius: 0.4,
-        startRadius: 0.1,
         scale: 4.0,
         color: "#ff80ff",
         points: 0,
     },
     {
         name: "Ping Pong", // Index 1
-        radius: 0.7,
-        startRadius: 0.4,
         scale: 0.7 / 0.4,
         color: "#ff734d",
         points: 1,
     },
     {
         name: "Golf", // Index 2
-        radius: 1.0,
-        startRadius: 0.7,
         scale: 0.31, // Ported from Rust scale
         color: "#e6e6e6",
         modelUrl: golfModel,
@@ -60,8 +60,6 @@ export const BALL_CONFIGS: BallConfig[] = [
     },
     {
         name: "Pool", // Index 3
-        radius: 1.3,
-        startRadius: 1.0,
         scale: 0.95,
         color: "#1b1bb1",
         modelUrl: poolModel,
@@ -69,8 +67,6 @@ export const BALL_CONFIGS: BallConfig[] = [
     },
     {
         name: "Tennis", // Index 4
-        radius: 1.6,
-        startRadius: 1.3,
         scale: 1.06,
         color: "#5ebf00",
         modelUrl: tennisModel,
@@ -78,8 +74,6 @@ export const BALL_CONFIGS: BallConfig[] = [
     },
     {
         name: "Baseball", // Index 5
-        radius: 1.9,
-        startRadius: 1.6,
         scale: 1.5,
         color: "#ffffff",
         modelUrl: baseballModel,
@@ -87,8 +81,6 @@ export const BALL_CONFIGS: BallConfig[] = [
     },
     {
         name: "Bowling", // Index 6
-        radius: 2.2,
-        startRadius: 1.9,
         scale: 6.85,
         color: "#cccccc",
         modelUrl: bowlingModel,
@@ -96,8 +88,6 @@ export const BALL_CONFIGS: BallConfig[] = [
     },
     {
         name: "Soccer", // Index 7
-        radius: 2.5,
-        startRadius: 2.2,
         scale: 2.16,
         color: "#cccccc",
         modelUrl: soccerModel,
@@ -105,8 +95,6 @@ export const BALL_CONFIGS: BallConfig[] = [
     },
     {
         name: "Basketball", // Index 8
-        radius: 2.8,
-        startRadius: 2.5,
         scale: 4.7,
         color: "#b44f20",
         modelUrl: basketballModel,
@@ -114,8 +102,6 @@ export const BALL_CONFIGS: BallConfig[] = [
     },
     {
         name: "Beach Ball", // Index 9
-        radius: 3.1,
-        startRadius: 2.8,
         scale: 2.65,
         color: "#ffffff",
         modelUrl: beachBallModel,
@@ -123,28 +109,37 @@ export const BALL_CONFIGS: BallConfig[] = [
     },
     {
         name: "Beach Ball 2",
-        radius: 3.8,
-        startRadius: 3.1,
-        scale: 2.65 * 3.8 / 3.1,
+        scale: 2.65 * getBallRadius(10) / getBallRadius(9),
         color: "#ffffff",
         modelUrl: beachBallModel,
         points: 20,
     },
     {
         name: "Beach Ball 3",
-        radius: 4.8,
-        startRadius: 3.8,
-        scale: 2.65 * 4.8 / 3.1,
+        scale: 2.65 * getBallRadius(11) / getBallRadius(9),
         color: "#ffffff",
         modelUrl: beachBallModel,
         points: 50,
-    }
+    },
+    {
+        name: "Beach Ball 4",
+        scale: 2.65 * getBallRadius(12) / getBallRadius(9),
+        color: "#ffffff",
+        modelUrl: beachBallModel,
+        points: 50,
+    },
+    {
+        name: "Beach Ball 5",
+        scale: 2.65 * getBallRadius(13) / getBallRadius(9),
+        color: "#ffffff",
+        modelUrl: beachBallModel,
+        points: 50,
+    },
+    {
+        name: "Beach Ball 6",
+        scale: 2.65 * getBallRadius(14) / getBallRadius(9),
+        color: "#ffffff",
+        modelUrl: beachBallModel,
+        points: 50,
+    },
 ];
-
-export const getBallRadius = (size: number) => {
-    return size * 0.3 + 0.4;
-};
-
-export const getBallStartRadius = (size: number) => {
-    return (size * 0.3 - 0.3 + 0.4) * 0.95;
-};
