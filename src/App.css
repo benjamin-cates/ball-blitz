@@ -25,3 +25,119 @@ body {
 * {
   font-family: "Lato", sans-serif;
 }
+
+.info-container {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 10px; /* Bridge the gap between button and popup */
+  margin: -10px; /* Offset the padding to keep the icon in the same place */
+}
+
+.info-button {
+  width: 32px;
+  height: 32px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: help;
+  transition: background-color 0.2s;
+}
+
+.info-container:hover .info-button {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.info-popup {
+  position: absolute;
+  bottom: 50px;
+  right: 0;
+  width: 250px;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: white;
+  border-radius: 12px;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s,
+    visibility 0.3s,
+    transform 0.3s;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.info-container:hover .info-popup {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.info-popup h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #24a314;
+}
+
+.info-popup p {
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 15px;
+}
+
+.info-popup a {
+  color: #44aaff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.info-popup a:hover {
+  text-decoration: underline;
+}
+
+.shake-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition:
+    transform 0.1s,
+    background-color 0.2s;
+}
+
+.shake-button:hover:not(:disabled) {
+  background-color: #ff6666;
+  transform: translateY(-1px);
+}
+
+.shake-button:active:not(:disabled) {
+  transform: translateY(0) scale(0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.shake-button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

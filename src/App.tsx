@@ -7,6 +7,7 @@ import { GameBox } from './components/GameBox';
 import { BallSpawner } from './components/BallSpawner';
 import { Ball } from './components/Ball';
 import { BallCounter } from './components/BallCounter';
+import { InfoButton } from './components/InfoButton';
 import { useGameStore } from './store';
 import './App.css';
 
@@ -72,30 +73,14 @@ const App: React.FC = () => {
   return (
     <div style={{ width: '100vw', height: '100vh', background: '#666' }}>
       <BallCounter />
+      <InfoButton />
       <button
+        className="shake-button"
         onClick={() => {
           setShaking(true);
           setTimeout(() => setShaking(false), 500);
         }}
         disabled={isShaking}
-        style={{
-          position: 'absolute',
-          top: 20,
-          right: 20,
-          zIndex: 1,
-          padding: '10px 20px',
-          fontSize: '18px',
-          backgroundColor: isShaking ? '#999' : '#ff4444',
-          color: 'white',
-          border: 'none',
-          borderRadius: '8px',
-          cursor: isShaking ? 'not-allowed' : 'pointer',
-          fontWeight: 'bold',
-          boxShadow: '0 4px 6px rgba(0,0,0,0.3)',
-          transition: 'transform 0.1s'
-        }}
-        onMouseDown={(e) => { if (!isShaking) e.currentTarget.style.transform = 'scale(0.95)' }}
-        onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1)' }}
       >
         {isShaking ? 'SHAKING...' : 'SHAKE'}
       </button>

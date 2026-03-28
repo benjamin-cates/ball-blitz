@@ -1,75 +1,24 @@
-# React + TypeScript + Vite
+# [Ball Blitz](https://benjamin-cates.github.io/ball-blitz)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+View the project hosted [here](https://benjamin-cates.github.io/ball-blitz)!
 
-Currently, two official plugins are available:
+Ball Blitz is a 3D ball matching game where the goal is to combine two beach balls! It was originally based on [Suika game](https://suika-game.app/), but uses a sports ball theme and is in 3D. 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The game was originally written in Rust [here](https://benjamin-cates.github.io/ball_blitz_old) in 2023, but was ported to TypeScript and React for better loading times.
 
-## React Compiler
+## Game description
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+The main play area has a transparent box that has an orbit camera around it. The player gets balls of random size from ping pong to tennis ball that they can spawn at the top of the box. If two balls of the same type touch, they merge to create the next largest ball. The current order of balls is:
 
-Note: This will impact Vite dev & build performances.
+1. Ping Pong ball
+2. Golf ball
+3. Billiards ball
+4. Tennis ball
+5. Baseball
+6. Bowling ball
+7. Soccer ball
+8. Basketball
+9. Beach ball
+10. ??? (to be added later)
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Points are gained when spawning balls and when merging balls, and points are lost when balls don't fit in the box and fall. The goal of the game is to create a beach ball without going into negative points.
