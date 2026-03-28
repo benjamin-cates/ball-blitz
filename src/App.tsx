@@ -8,6 +8,7 @@ import { BallSpawner } from './components/BallSpawner';
 import { Ball } from './components/Ball';
 import { BallCounter } from './components/BallCounter';
 import { InfoButton } from './components/InfoButton';
+import { TitleScreen } from './components/TitleScreen';
 import { useGameStore } from './store';
 import './App.css';
 
@@ -26,6 +27,13 @@ const App: React.FC = () => {
   const addPoints = useGameStore((state) => state.addPoints);
   const setBoxSize = useGameStore((state) => state.setBoxSize);
   const setBallCounts = useGameStore((state) => state.setBallCounts);
+  const gameStarted = useGameStore((state) => state.gameStarted);
+  const setGameStarted = useGameStore((state) => state.setGameStarted);
+
+  const handleQuit = useCallback(() => {
+    setGameStarted(false);
+    setBalls([]);
+  }, [setGameStarted]);
 
   const updateBallCounts = useCallback((currentBalls: BallInstance[]) => {
     const counts: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0 };
@@ -72,18 +80,29 @@ const App: React.FC = () => {
 
   return (
     <div style={{ width: '100vw', height: '100vh', background: '#666' }}>
+      {!gameStarted && <TitleScreen />}
       <BallCounter />
       <InfoButton />
-      <button
-        className="shake-button"
-        onClick={() => {
-          setShaking(true);
-          setTimeout(() => setShaking(false), 500);
-        }}
-        disabled={isShaking}
-      >
-        {isShaking ? 'SHAKING...' : 'SHAKE'}
-      </button>
+      {gameStarted && (
+        <>
+          <button
+            className="quit-button"
+            onClick={handleQuit}
+          >
+            QUIT
+          </button>
+          <button
+            className="shake-button"
+            onClick={() => {
+              setShaking(true);
+              setTimeout(() => setShaking(false), 500);
+            }}
+            disabled={isShaking}
+          >
+            {isShaking ? 'SHAKING...' : 'SHAKE'}
+          </button>
+        </>
+      )}
       <Canvas shadows>
         <PerspectiveCamera makeDefault position={[30, 0, 0]} />
         <OrbitControls makeDefault />

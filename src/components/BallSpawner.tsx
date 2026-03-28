@@ -14,12 +14,17 @@ export const BallSpawner: React.FC<BallSpawnerProps> = ({ onSpawn }) => {
     const [nextSize, setNextSize] = useState(() => Math.floor(Math.random() * 4) + 1);
     const [previewPos, setPreviewPos] = useState<THREE.Vector3 | null>(null);
     const boxSize = useGameStore((state) => state.boxSize);
+    const gameStarted = useGameStore((state) => state.gameStarted);
     const { raycaster, mouse, camera } = useThree();
 
     const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -boxSize.y);
     const point = new THREE.Vector3();
 
     useFrame(() => {
+        if (!gameStarted) {
+            if (previewPos) setPreviewPos(null);
+            return;
+        }
         raycaster.setFromCamera(mouse, camera);
         if (raycaster.ray.intersectPlane(plane, point)) {
             const radius = getBallRadius(nextSize);
@@ -40,18 +45,19 @@ export const BallSpawner: React.FC<BallSpawnerProps> = ({ onSpawn }) => {
     });
 
     const handleClick = useCallback(() => {
-        if (previewPos) {
+        if (previewPos && gameStarted) {
             onSpawn(nextSize, previewPos.clone());
             setNextSize(Math.floor(Math.random() * 4) + 1);
         }
-    }, [previewPos, nextSize, onSpawn]);
+    }, [previewPos, nextSize, onSpawn, gameStarted]);
 
     // Attach click listener to window or a transparent overlay
     useEffect(() => {
+        if (!gameStarted) return;
         const handleWindowClick = () => handleClick();
         window.addEventListener('mousedown', handleWindowClick);
         return () => window.removeEventListener('mousedown', handleWindowClick);
-    }, [handleClick]);
+    }, [handleClick, gameStarted]);
 
     return (
         <group>
